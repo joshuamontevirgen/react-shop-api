@@ -32,7 +32,7 @@ namespace WebApplication3
             services.AddControllers().AddNewtonsoftJson();
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
-                builder.WithOrigins("http://localhost", "http://localhost:3000")
+                builder.WithOrigins("https://thankful-stone-0a2b60b00.1.azurestaticapps.net")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));

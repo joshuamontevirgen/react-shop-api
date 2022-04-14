@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebApplication3.Models.CatalogModels;
 using WebApplication3.Services;
 using WebApplication3.tempDB;
 
@@ -20,9 +21,9 @@ namespace WebApplication3.Controllers
             _itemCategoryService = itemCategory; 
         }
         [HttpGet]
-        public ActionResult<List<ItemCategory>> Get()
+        public ActionResult<List<ItemCategoriesModel>> Get()
         {
-            return _itemCategoryService.GetList().ToList();
+            return ItemCategoriesModel.ToModel( _itemCategoryService.GetList());
         }
 
     }

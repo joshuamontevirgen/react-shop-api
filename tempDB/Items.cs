@@ -1,24 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApplication3.tempDB
 {
     public class Items
     {
-        public static List<Item> _items = new List<Item>
+        public static List<Item> _items = new List<Item> ();
+        static Items()
         {
-            new Item {Id=1, Name = "food1", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Food" },
-            new Item {Id=2, Name = "food2", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Food"  },
-            new Item {Id=3, Name = "food3", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Food"  },
-            new Item {Id=4, Name = "food4", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Food"  },
-            new Item {Id=5, Name = "food5", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Food"  },
-            new Item {Id=6, Name = "beverage1", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Beverage"  },
-            new Item {Id=7, Name = "beverage2", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Beverage" },
-            new Item {Id=8, Name = "beverage3", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Beverage" },
-            new Item {Id=9, Name = "beverage4", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Beverage" },
-            new Item {Id=10, Name = "beverage5", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Beverage" },
-            new Item {Id=11, Name = "snacks1", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Snacks" },
-            new Item {Id=12, Name = "snacks2", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Snacks" },
-            new Item {Id=13, Name = "snacks3", Desc = "desc", Price = 1, ImageUrl = "https://localhost:44329/img/itm.jpg", Category = "Snacks" },
-        };
+            _items = GenerateItems();
+        }
+        private static List<Item> GenerateItems()
+        {
+            var random = new Random();
+
+            var categories = ItemCategories._categories;//.Where(s => s.Parent != null).ToList();
+
+            var parentCategories = categories.Where(s => s.Parent != null).ToList();
+            var parentCategoriesNoChildren = categories.Where(s => s.Parent == null && !categories.Where(q => q.Parent != null).Select(q => q.Parent).Contains(s.Parent)).ToList();
+            parentCategories = parentCategories.Concat(parentCategoriesNoChildren).ToList();
+
+            var list = new List<Item>();
+            for (int i = 0; i < 200; i++)
+            {
+                var category = parentCategories[random.Next(parentCategories.Count())];
+                list.Add(new Item
+                {
+                    Id = i,
+                    Category = category.Value,
+                    Desc = $"desc-{i}",
+                    ImageUrl = "https://localhost:44329/img/itm.jpg",
+                    Price = Convert.ToDecimal(random.NextDouble() * random.NextInt64(1000)),
+                    Name = $"{category.Value }-{i}"
+
+                });
+            }
+            return list;
+            //return Items._items.Select(s => _mapper.Map<ItemModel>(s));
+        }
+
+     
     }
 }

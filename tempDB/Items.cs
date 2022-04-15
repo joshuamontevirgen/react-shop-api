@@ -30,7 +30,7 @@ namespace WebApplication3.tempDB
                     Id = i,
                     Category = category.Value,
                     Desc = $"desc-{i}",
-                    ImageUrl = "https://localhost:44329/img/itm.jpg",
+                    ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl4DVWvAO7RQ2wDrUrmviP4Kt3eTEAppgUTNQUnFLkytu2r6RPy_7BCjoWokhI3uf8e4Y&usqp=CAU",
                     Price = Convert.ToDecimal(random.NextDouble() * random.NextInt64(1000)),
                     Name = $"{category.Value }-{i}"
 

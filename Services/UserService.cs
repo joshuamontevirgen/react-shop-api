@@ -27,7 +27,6 @@ namespace WebApplication3.Services
         public void Update(UserModel model)
         {
             var user = _users.FirstOrDefault(s => s.Id == model.Id);
-            user.Address = model.Address;
         }
 
         public UserModel Authenticate(string email, string password)

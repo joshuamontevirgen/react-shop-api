@@ -12,7 +12,7 @@ using WebApplication3.Services;
 namespace WebApplication3.Controllers
 {
     [EnableCors("CorsPolicy")]
-    [Route("api/[controller]")]
+    [Route("api/user/[controller]")]
     [ApiController]
     [Authorize]
     public class ProfileController : BaseApiController

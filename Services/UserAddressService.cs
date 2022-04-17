@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using WebApplication3.Models.UserModels;
 using WebApplication3.tempDB;
 using System.Linq;
+using System;
 
 namespace WebApplication3.Services
 {
@@ -13,9 +14,13 @@ namespace WebApplication3.Services
         {
             _mapper = mapper;
         }
-        public void Add(UserAddressModel userAddress)
+        public bool Add(int userId, UserAddressModel userAddress)
         {
-            UserAddresses._userAddresses.Add(_mapper.Map<UserAddress>(userAddress));
+            var newAddress = _mapper.Map<UserAddress>(userAddress);
+            newAddress.Id = new Random().Next(1000000);
+            newAddress.UserId = userId;
+            UserAddresses._userAddresses.Add(newAddress);
+            return true;
         }
 
         public void Delete(int id)
@@ -23,7 +28,7 @@ namespace WebApplication3.Services
             UserAddresses._userAddresses.RemoveAll(s => s.Id == id);
         }
 
-        public List<UserAddressModel> GetByUserid(int id)
+        public List<UserAddressModel> GetByUserId(int id)
         {
             return UserAddresses._userAddresses.Where(s => s.UserId == id).Select(s => _mapper.Map<UserAddressModel>(s)).ToList();
         }

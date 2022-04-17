@@ -6,7 +6,7 @@ namespace WebApplication3.tempDB
 {
     public class Items
     {
-        public static List<Item> _items = new List<Item> ();
+        public static List<Item> _items = new List<Item>();
         static Items()
         {
             _items = GenerateItems();
@@ -40,6 +40,6 @@ namespace WebApplication3.tempDB
             //return Items._items.Select(s => _mapper.Map<ItemModel>(s));
         }
 
-     
+
     }
 }

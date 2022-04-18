@@ -9,7 +9,5 @@ namespace WebApplication3.Models.UserModels
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public int Id { get; set; }
-        public string Address { get; set; }
     }
 }

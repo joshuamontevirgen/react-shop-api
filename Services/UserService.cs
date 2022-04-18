@@ -11,42 +11,59 @@ namespace WebApplication3.Services
 {
     public class UserService : IUserService
     {
-        private readonly  List<User> _users;
         private readonly IMapper _mapper;
 
         public UserService(IMapper mapper)
         {
-            _users = Users._users;
             _mapper = mapper;
         }
 
-        public void Add(RegisterUserModel model)
+        public ReturnValue Add(RegisterUserModel model)
         {
-            _users.Add(_mapper.Map<User>(model));
+            if(Users._users.Any(s => s.Email == model.Email))
+            {
+                return new ReturnValue
+                {
+                    Success = false,
+                    Message = "Email is already taken"
+                };
+            }
+
+            Users._users.Add(new User
+            {
+                Email = model.Email,
+                Password = model.Password,
+                Id = new Random().Next(10000)
+            }) ;
+            return new ReturnValue
+            {
+                Success = true,
+                Message = "Registration success"
+            };
         }
         public void Update(UserModel model)
         {
-            var user = _users.FirstOrDefault(s => s.Id == model.Id);
+            var user =  Users._users.FirstOrDefault(s => s.Id == model.Id);
         }
 
         public UserModel Authenticate(string email, string password)
         {
-            return _mapper.Map<UserModel>(_users.FirstOrDefault(s => s.Email == email && s.Password == password));
+            return _mapper.Map<UserModel>( Users._users.FirstOrDefault(s => s.Email == email && s.Password == password));
         }
 
         public IEnumerable<UserModel> GetAll()
         {
-            return _users.ToList().Select(u => _mapper.Map<UserModel>(u));
+            return  Users._users.ToList().Select(u => _mapper.Map<UserModel>(u));
         }
 
         public UserModel GetByEmail(string email)
         {
-            return _mapper.Map<UserModel>(_users.FirstOrDefault(s => s.Email == email));
+            return _mapper.Map<UserModel>( Users._users.FirstOrDefault(s => s.Email == email));
         }
 
         public UserModel GetById(int id)
         {
-            return _mapper.Map<UserModel>(_users.FirstOrDefault(s => s.Id == id));
+            return _mapper.Map<UserModel>( Users._users.FirstOrDefault(s => s.Id == id));
         }
     }
 }

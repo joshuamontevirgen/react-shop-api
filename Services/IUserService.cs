@@ -13,7 +13,7 @@ namespace WebApplication3.Services
         IEnumerable<UserModel> GetAll();
         UserModel GetByEmail(string email);
         UserModel GetById(int id);
-        void Add(RegisterUserModel model);
+        ReturnValue Add(RegisterUserModel model);
         void Update(UserModel model);
         UserModel Authenticate(string email, string password);
 

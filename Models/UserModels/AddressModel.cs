@@ -1,6 +1,6 @@
 ﻿namespace WebApplication3.Models.UserModels
 {
-    public class UserAddressModel
+    public class AddressModel
     {
         public int Id { get; set; }
         public string Address { get; set; }

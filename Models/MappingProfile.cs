@@ -17,8 +17,10 @@ namespace WebApplication3.Models
             CreateMap<UserModel, User>();
             CreateMap<Item, ItemModel>();
             CreateMap<ItemModel, Item>();
-            CreateMap<UserAddressModel, UserAddress>();
-            CreateMap<UserAddress, UserAddressModel>();
+            CreateMap<AddressModel, UserAddress>();
+            CreateMap<UserAddress, AddressModel>();
+            CreateMap<ContactDetailsModel, UserContactDetails>();
+            CreateMap<UserContactDetails, ContactDetailsModel>();
         }
     }
 }

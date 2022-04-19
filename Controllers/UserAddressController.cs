@@ -21,13 +21,13 @@ namespace WebApplication3.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<UserAddressModel>> Get()
+        public ActionResult<List<AddressModel>> Get()
         {
             return _userAddressService.GetByUserId(GetUserId());
         }
 
         [HttpPost]
-        public ActionResult<bool> Post([FromBody]UserAddressModel model)
+        public ActionResult<bool> Post([FromBody]AddressModel model)
         {
             return _userAddressService.Add(GetUserId(), model);
         }

@@ -62,6 +62,7 @@ namespace WebApplication3
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IItemCategoryService, ItemCategoryService>();
             services.AddScoped<IUserAddressService, UserAddressService>();
+            services.AddScoped<IUserContactDetailsService, UserContactDetailsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

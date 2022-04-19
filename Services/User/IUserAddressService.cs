@@ -5,8 +5,8 @@ namespace WebApplication3.Services
 {
     public interface IUserAddressService
     {
-        public List<UserAddressModel> GetByUserId(int id);
-        public bool Add(int userId, UserAddressModel userAddress);
+        public List<AddressModel> GetByUserId(int id);
+        public bool Add(int userId, AddressModel userAddress);
         public void Delete(int id);
     }
 }

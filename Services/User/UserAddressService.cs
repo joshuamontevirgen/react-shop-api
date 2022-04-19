@@ -14,7 +14,7 @@ namespace WebApplication3.Services
         {
             _mapper = mapper;
         }
-        public bool Add(int userId, UserAddressModel userAddress)
+        public bool Add(int userId, AddressModel userAddress)
         {
             var newAddress = _mapper.Map<UserAddress>(userAddress);
             newAddress.Id = new Random().Next(1000000);
@@ -28,9 +28,9 @@ namespace WebApplication3.Services
             UserAddresses._userAddresses.RemoveAll(s => s.Id == id);
         }
 
-        public List<UserAddressModel> GetByUserId(int id)
+        public List<AddressModel> GetByUserId(int id)
         {
-            return UserAddresses._userAddresses.Where(s => s.UserId == id).Select(s => _mapper.Map<UserAddressModel>(s)).ToList();
+            return UserAddresses._userAddresses.Where(s => s.UserId == id).Select(s => _mapper.Map<AddressModel>(s)).ToList();
         }
     }
 }

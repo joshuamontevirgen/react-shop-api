@@ -32,7 +32,7 @@ namespace WebApplication3
             services.AddControllers().AddNewtonsoftJson();
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
-                builder.WithOrigins("https://thankful-stone-0a2b60b00.1.azurestaticapps.net")
+                builder.WithOrigins("https://thankful-stone-0a2b60b00.1.azurestaticapps.net", "https://reactshop.itdcsystems.com")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));

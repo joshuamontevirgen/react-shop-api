@@ -16,7 +16,7 @@ namespace WebApplication3.Services
         }
         public ContactDetailsModel Get(int userId)
         {
-            return _mapper.Map<ContactDetailsModel>(UserContactDetailsList._userContactDetails.FirstOrDefault(s => s.UserId == userId));
+            return _mapper.Map<ContactDetailsModel>(UserContactDetailsList._userContactDetails.FirstOrDefault(s => s.UserId == userId)) ?? new ContactDetailsModel();
         }
 
         public bool Save(int userId, ContactDetailsModel model)

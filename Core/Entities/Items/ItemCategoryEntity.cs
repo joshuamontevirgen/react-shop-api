@@ -13,7 +13,7 @@ namespace Core.Entities.Items
         internal List<ItemEntity> Items { get; set; }
 
         [ForeignKey("ParentId")]
-        internal ItemEntity Parent { get; set; }
-        internal List<ItemEntity> Children { get; set; }
+        internal ItemCategoryEntity Parent { get; set; }
+        internal List<ItemCategoryEntity> Children { get; set; }
     }
 }

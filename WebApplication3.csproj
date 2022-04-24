@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\**" />
+    <Compile Remove="UnitTester\**" />
+    <Content Remove="Core\**" />
+    <Content Remove="UnitTester\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="UnitTester\**" />
+    <None Remove="Core\**" />
+    <None Remove="UnitTester\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />

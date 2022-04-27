@@ -7,6 +7,7 @@ using Core.Domain.Users;
 using Core.Services.Users;
 using FluentAssertions;
 using NUnit.Framework;
+using UnitTester.DataGenerators.Interfaces;
 
 namespace UnitTester.Users
 {
@@ -14,27 +15,21 @@ namespace UnitTester.Users
     {
         IUserService _userService;
         IUserContactDetailsService _contactDetailsService;
+        IUserDataGenerator userDataGenerator;
         [SetUp]
         public void Setup()
         {
             var provider = new SetupDI();
             _userService = provider.GetService<IUserService>();
             _contactDetailsService = provider.GetService<IUserContactDetailsService>();
+            userDataGenerator = provider.GetService<IUserDataGenerator>();
         }
 
-        User AddUser()
-        {
-            return _userService.Add(new Core.Domain.Users.User
-            {
-                Email = $"{Guid.NewGuid().ToString()}@abc.com",
-                Password = "pass",
-            });
-        }
 
         [Test]
         public void AddContactDetails()
         {
-            var user = AddUser();
+            var user = userDataGenerator.AddUser();
             var details = new UserContactDetails
             {
                 UserId = user.Id,
@@ -48,7 +43,7 @@ namespace UnitTester.Users
         [Test]
         public void UpdateContactDetails()
         {
-            var user = AddUser();
+            var user = userDataGenerator.AddUser();
             var details1 = new UserContactDetails
             {
                 UserId = user.Id,

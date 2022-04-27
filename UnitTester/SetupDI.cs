@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTester.DataGenerators.Infrastructure;
 
 namespace UnitTester
 {
@@ -17,6 +18,7 @@ namespace UnitTester
         {
             services = new ServiceCollection();
             services.AddShopCore();
+            services.AddDataGenerators();
             serviceProvider = services.BuildServiceProvider();
         }
         public T GetService<T>()

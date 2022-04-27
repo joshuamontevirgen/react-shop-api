@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using UnitTester.DataGenerators.Interfaces;
 
 namespace UnitTester.Items
 {
@@ -13,34 +14,22 @@ namespace UnitTester.Items
     {
         IItemCategoryService _itemCategoryService;
         IItemService _itemService;
+        IItemDataGenerator _generator;
         [SetUp]
         public void Setup()
         {
             var provider = new SetupDI();
             _itemCategoryService = provider.GetService<IItemCategoryService>();
             _itemService = provider.GetService<IItemService>();
+            _generator = provider.GetService<IItemDataGenerator>();
         }
 
         [Test]
         public void AddItem()
         {
-            var category = new Core.Domain.Items.ItemCategory
-            {
-                Label = "zz",
-                Value = "zz",
-                ParentId = null,
-            };
-            _itemCategoryService.Add(category);
+            var category = _generator.AddCategory();
 
-            var item = new Core.Domain.Items.Item
-            {
-                Desc = "desc",
-                ImageUrl = "url",
-                ItemCategoryId = category.Id,
-                Name = "name",
-                Price = 1M
-            };
-            _itemService.Add(item);
+            var item = _generator.AddItem(category.Id);
 
             var itemGet = _itemService.GetById(item.Id);
             itemGet.Should().BeEquivalentTo(item);
@@ -50,46 +39,12 @@ namespace UnitTester.Items
         [Test]
         public void GetByCategory()
         {
-            var category1 = new Core.Domain.Items.ItemCategory
-            {
-                Label = "zz",
-                Value = "zz",
-                ParentId = null,
-            };
-            _itemCategoryService.Add(category1);
-            var category2 = new Core.Domain.Items.ItemCategory
-            {
-                Label = "zz",
-                Value = "zz",
-                ParentId = null,
-            };
-            _itemCategoryService.Add(category2);
+            var category1 = _generator.AddCategory();
+            var category2 = _generator.AddCategory();
 
-
-            _itemService.Add(new Core.Domain.Items.Item
-            {
-                Desc = "desc",
-                ImageUrl = "url",
-                ItemCategoryId = category1.Id,
-                Name = "name",
-                Price = 1M
-            });
-            _itemService.Add(new Core.Domain.Items.Item
-            {
-                Desc = "desc",
-                ImageUrl = "url",
-                ItemCategoryId = category2.Id,
-                Name = "name",
-                Price = 1M
-            });
-            _itemService.Add(new Core.Domain.Items.Item
-            {
-                Desc = "desc",
-                ImageUrl = "url",
-                ItemCategoryId = category2.Id,
-                Name = "name",
-                Price = 1M
-            });
+            _generator.AddItem(category1.Id);
+            _generator.AddItem(category2.Id);
+            _generator.AddItem(category2.Id);
 
             var items = _itemService.GetByCategoryId(category2.Id);
             Assert.IsTrue(items.Count() == 2);

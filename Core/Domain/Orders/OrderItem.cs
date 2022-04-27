@@ -1,6 +1,6 @@
 ﻿namespace Core.Domain.Orders
 {
-    public class OrderItem
+    public class OrderItem : BaseEntity
     {
         public int Id { get; set; }
         public int OrderId { get; set; }

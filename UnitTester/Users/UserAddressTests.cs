@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using UnitTester.DataGenerators.Interfaces;
 
 namespace UnitTester
 {
@@ -14,29 +15,22 @@ namespace UnitTester
     {
         IUserService _userService;
         IUserAddressService _userAddressService;
+        IUserDataGenerator userDataGenerator;
         [SetUp]
         public void Setup()
         {
             var provider = new SetupDI();
             _userService = provider.GetService<IUserService>();
             _userAddressService = provider.GetService<IUserAddressService>();
+            userDataGenerator = provider.GetService<IUserDataGenerator>();
         }
 
 
-      
-        User AddUser()
-        {
-            return _userService.Add(new Core.Domain.Users.User
-            {
-                Email = $"{Guid.NewGuid().ToString()}@abc.com",
-                Password = "pass",
-            });
-        }
 
         [Test]
         public void AddAddress()
         {
-            var user = AddUser();
+            var user = userDataGenerator.AddUser();
             var address = new UserAddress
             {
                 UserId = user.Id,
@@ -53,8 +47,8 @@ namespace UnitTester
         [Test]
         public void GetUserAddresses()
         {
-            var user1 = AddUser();
-            var user2 = AddUser(); 
+            var user1 = userDataGenerator.AddUser();
+            var user2 = userDataGenerator.AddUser(); 
             _userAddressService.Add(new UserAddress
             {
                 UserId = user1.Id,

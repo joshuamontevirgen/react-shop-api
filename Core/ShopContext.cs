@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Items;
 using Core.Domain.Users;
+using Core.Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.DB
@@ -14,5 +15,7 @@ namespace Core.DB
         internal DbSet<UserContactDetails> UserContactDetails { get; set; }
         internal DbSet<Item> Items { get; set; }
         internal DbSet<ItemCategory> ItemCategories { get; set; }
+        internal DbSet<Order> Orders { get; set; }
+        internal DbSet<OrderItem> OrderItems { get; set; }
     }
 }

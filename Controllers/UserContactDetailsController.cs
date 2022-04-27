@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Core.Domain.Users;
+using Core.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication3.Models.UserModels;
-using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -20,15 +21,16 @@ namespace WebApplication3.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ContactDetailsModel> Get()
+        public ActionResult<UserContactDetails> Get()
         {
-            return _contactDetailsService.Get(GetUserId());
+            return _contactDetailsService.GetByUserId(GetUserId());
         }
 
         [HttpPost]
-        public ActionResult<bool> Post([FromBody] ContactDetailsModel model)
+        public ActionResult<bool> Post([FromBody] UserContactDetails model)
         {
-            return _contactDetailsService.Save(GetUserId(), model);
+            model.UserId = GetUserId(); 
+            return _contactDetailsService.Save(model) != null;
         }
     }
 }

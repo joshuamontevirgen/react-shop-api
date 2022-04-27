@@ -14,6 +14,7 @@ namespace Core.Services.Users
         User Update(User model);
         IEnumerable<User> GetAll();
         User Authenticate(string email, string password);
+        bool ChangePassword(int userId, string password);
 
         User GetByEmail(string email);
 

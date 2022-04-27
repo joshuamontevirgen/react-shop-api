@@ -1,12 +1,9 @@
-﻿namespace WebApplication3.Models.CatalogModels
+﻿using Core.Domain.Items;
+
+namespace WebApplication3.Models.CatalogModels
 {
-    public class ItemModel
+    public class ItemModel : Item
     {  
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Desc { get;set; }
-        public decimal Price { get; set; }
-        public string ImageUrl { get; set; }
         public string Category { get; set; }
     }
 }

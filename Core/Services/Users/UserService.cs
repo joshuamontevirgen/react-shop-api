@@ -41,10 +41,16 @@ namespace Core.Services.Users
 
         public User GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            return _userRepository.Filter(filter: s => s.Email == email).FirstOrDefault();
         }
 
         public User Update(User model)
+        {
+            //do not include password in update
+            throw new NotImplementedException();
+        }
+
+        public bool ChangePassword(int userId, string password)
         {
             throw new NotImplementedException();
         }

@@ -27,6 +27,11 @@ namespace Core.Services.Items
             return _itemCategoryRepository.Filter(filter: s => s.ParentId == parentId).ToList();
         }
 
+        public List<ItemCategory> GetParentCategories()
+        {
+            return _itemCategoryRepository.Filter(filter: s => s.ParentId == null).ToList();
+        }
+
         public ItemCategory Add(ItemCategory model)
         {
             return _itemCategoryRepository.Insert(model);

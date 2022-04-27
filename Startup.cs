@@ -1,3 +1,4 @@
+using Core.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,8 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApplication3.DataGenerator;
 using WebApplication3.Jwt;
-using WebApplication3.Services;
 
 namespace WebApplication3
 {
@@ -32,7 +33,7 @@ namespace WebApplication3
             services.AddControllers().AddNewtonsoftJson();
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
-                builder.WithOrigins("http://localhost", "http://localhost:3000")
+                builder.WithOrigins("http://localhost", "http://localhost:3000", "http://192.168.56.1:3000")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
@@ -58,11 +59,12 @@ namespace WebApplication3
             });
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IItemService, ItemService>();
-            services.AddScoped<IItemCategoryService, ItemCategoryService>();
-            services.AddScoped<IUserAddressService, UserAddressService>();
-            services.AddScoped<IUserContactDetailsService, UserContactDetailsService>();
+            services.AddShopCore();
+            services.Scan(scan =>
+                    scan.FromCallingAssembly()
+                        .AddClasses()
+                        .AsMatchingInterface()
+                        .WithTransientLifetime());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,6 +97,18 @@ namespace WebApplication3
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var scope = app.ApplicationServices.CreateScope();
+            var generator = scope.ServiceProvider.GetRequiredService<ITestDataGenerator>();
+            AddTestData(generator);
+        }
+
+        //https://stackoverflow.com/questions/67171224/entity-framework-core-use-in-memory-database-and-fill-with-fake-data
+        private static void AddTestData(ITestDataGenerator testDataGenerator)
+        {
+            testDataGenerator.GenerateCategories();
+            testDataGenerator.GenerateItems();
+            testDataGenerator.GenerateUsers();
         }
     }
 }

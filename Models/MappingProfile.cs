@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using Core.Domain.Items;
+using Core.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication3.Models.CatalogModels;
 using WebApplication3.Models.UserModels;
-using WebApplication3.tempDB;
 
 namespace WebApplication3.Models
 {

@@ -1,32 +1,20 @@
-﻿using System.Collections.Generic;
-using WebApplication3.tempDB;
+﻿using Core.Domain.Items;
+using Core.Services.Items;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebApplication3.Models.CatalogModels
 {
-    public class ItemCategoriesModel
+    public class ItemCategoriesModel : ItemCategory
     {
-        public string Value { get; set; }
-        public string Label { get; set; }
-        public IEnumerable<ItemCategoriesModel> Children { get; set; }
-
-        public string Parent { get; set; }
-
-        public static List<ItemCategoriesModel> ToModel(IEnumerable<ItemCategory> cats)
+        public ItemCategoriesModel()
         {
-            return cats.Where(c => c.Parent == null).Select(c => new ItemCategoriesModel
-            {
-                Value = c.Value,
-                Label = c.Label,
-                Parent = null,
-                Children = cats.Where(c2 => c2.Parent == c.Value).Select(c3 => new ItemCategoriesModel
-                {
-                    Label = c3.Label,
-                    Value = c3.Value,
-                    Parent = c.Value
-                })
-            }).ToList();
-
+            Children = new List<ItemCategoriesModel>();
         }
+        public List<ItemCategoriesModel> Children { get; set; }
+        public ItemCategory Parent { get; set; }
+
+
+  
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Core.Domain.Users;
+using Core.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication3.Models.UserModels;
-using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -19,9 +21,11 @@ namespace WebApplication3.Controllers
     {
 
         IUserService _userService;
-        public ProfileController(IUserService userService)
+        IMapper mapper;
+        public ProfileController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            this.mapper = mapper;
         }
 
         // GET api/<ValuesController>/5
@@ -30,7 +34,7 @@ namespace WebApplication3.Controllers
         public ActionResult<UserModel> Get()
         {
             var id = GetUserId();
-            return _userService.GetById(id);
+            return mapper.Map<UserModel>(_userService.GetById(id));
         }
 
         // PUT api/<ValuesController>/5
@@ -38,7 +42,7 @@ namespace WebApplication3.Controllers
         public void Put([FromBody] UserModel model)
         {
             model.Id = GetUserId();
-            _userService.Update(model);
+            _userService.Update(mapper.Map<User>(model));
         }
 
     }

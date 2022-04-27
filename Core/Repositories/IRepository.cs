@@ -6,24 +6,23 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core
+namespace Core.Repositories
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
         TEntity GetByID(object id);
-        IEnumerable<TEntity> Get(
+        IEnumerable<TEntity> Filter(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            string includeProperties = "");
 
-        void Insert(TEntity entity);
+        TEntity Insert(TEntity entity);
 
         void Delete(object id);
         void Delete(TEntity entityToDelete);
-        void Update(TEntity entityToUpdate);
+        TEntity Update(TEntity entityToUpdate);
 
         List<TEntity> GetAll();
 
-        void Save();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core.DB;
 using Core.Domain.Items;
+using Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,13 @@ using System.Threading.Tasks;
 
 namespace Core.Services.Items
 {
-    public class ItemCategoryService
+    public class ItemCategoryService : IItemCategoryService
     {
         IRepository<ItemCategory> _itemCategoryRepository;
         public ItemCategoryService(IRepository<ItemCategory> itemCategoryRepository)
         {
-            //_itemCategoryRepository = _itemCategoryRepository;
-
-            DbContextOptions<ShopContext> options = new Microsoft.EntityFrameworkCore.DbContextOptionsBuilder<ShopContext>()
-            .UseInMemoryDatabase(databaseName: "Test")
-            .Options;
-
-            _itemCategoryRepository = new Repository<ItemCategory>(new ShopContext(options));
+            _itemCategoryRepository = itemCategoryRepository;
         }
-
 
         public ItemCategory GetById(int id)
         {
@@ -30,14 +24,12 @@ namespace Core.Services.Items
         }
         public List<ItemCategory> GetChildCategories(int parentId)
         {
-            return _itemCategoryRepository.Get(filter: s => s.ParentId == parentId).ToList();
+            return _itemCategoryRepository.Filter(filter: s => s.ParentId == parentId).ToList();
         }
 
-
-        public void Add(ItemCategory model)
+        public ItemCategory Add(ItemCategory model)
         {
-            _itemCategoryRepository.Insert(model);
-            _itemCategoryRepository.Save();
+            return _itemCategoryRepository.Insert(model);
         }
         public IEnumerable<ItemCategory> GetAll()
         {

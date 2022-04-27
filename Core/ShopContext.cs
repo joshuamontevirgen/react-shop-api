@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.DB
 {
-    internal class ShopContext : DbContext
+    public class ShopContext : DbContext
     {
-        internal ShopContext(DbContextOptions<ShopContext> options)
+        public ShopContext(DbContextOptions<ShopContext> options)
             : base(options)
         { }
         internal DbSet<User> Users { get; set; }

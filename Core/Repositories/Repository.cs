@@ -8,20 +8,20 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 //https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
-namespace Core
+namespace Core.Repositories
 {
-    internal class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        internal ShopContext context;
-        internal DbSet<TEntity> dbSet;
+        ShopContext context;
+        DbSet<TEntity> dbSet;
 
-        internal Repository(ShopContext context)
+        public Repository(ShopContext context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public virtual IEnumerable<TEntity> Filter(
              Expression<Func<TEntity, bool>> filter = null,
              Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
@@ -57,9 +57,11 @@ namespace Core
             return dbSet.ToList();
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual TEntity Insert(TEntity entity)
         {
             dbSet.Add(entity);
+            context.SaveChanges();
+            return entity;
         }
 
         public virtual void Delete(object id)
@@ -75,15 +77,16 @@ namespace Core
             }
             dbSet.Remove(entityToDelete);
         }
-        public virtual void Update(TEntity entityToUpdate)
+
+        //https://stackoverflow.com/questions/50987635/the-instance-of-entity-type-item-cannot-be-tracked-because-another-instance-wi
+        public virtual TEntity Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            var entry = dbSet.First(s => s.Id == entityToUpdate.Id);
+            context.Entry(entry).CurrentValues.SetValues(entityToUpdate);
+            context.SaveChanges();
+            return entityToUpdate;
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
+
     }
 }

@@ -1,0 +1,16 @@
+
+https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design#dependency-inversion-principle
+
+https://ngohungphuc.wordpress.com/2018/05/01/generic-repository-pattern-in-asp-net-core/
+
+
+https://www.c-sharpcorner.com/article/implementing-unit-of-work-and-repository-pattern-with-dependency-injection-in-n/
+https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles#dependency-inversion
+
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
+
+https://medium.com/microtica/the-concept-of-domain-driven-design-explained-3184c0fd7c3f
+
+
+https://fluentassertions.com/objectgraphs/

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Core.Domain.Users;
+using Core.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebApplication3.Models.UserModels;
-using WebApplication3.Services;
+using System.Linq;
 
 namespace WebApplication3.Controllers
 {
@@ -21,15 +23,16 @@ namespace WebApplication3.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<UserAddressModel>> Get()
+        public ActionResult<List<UserAddress>> Get()
         {
-            return _userAddressService.GetByUserId(GetUserId());
+            return _userAddressService.GetUserAddresses(GetUserId()).ToList();
         }
 
         [HttpPost]
-        public ActionResult<bool> Post([FromBody]UserAddressModel model)
+        public ActionResult<bool> Post([FromBody] UserAddress model)
         {
-            return _userAddressService.Add(GetUserId(), model);
+            model.UserId = GetUserId();
+            return _userAddressService.Add(model) != null;
         }
     }
 }

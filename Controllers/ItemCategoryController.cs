@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Core.Domain.Items;
+using Core.Services.Items;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebApplication3.Models;
 using WebApplication3.Models.CatalogModels;
-using WebApplication3.Services;
-using WebApplication3.tempDB;
+using WebApplication3.Models.Factories;
 
 namespace WebApplication3.Controllers
 {
@@ -16,14 +18,16 @@ namespace WebApplication3.Controllers
     public class ItemCategoryController : ControllerBase
     {
         private readonly IItemCategoryService _itemCategoryService;
-        public ItemCategoryController(IItemCategoryService itemCategory)
+        private readonly IItemCategoriesModelFactory _factory;
+        public ItemCategoryController(IItemCategoryService itemCategory, IItemCategoriesModelFactory factory)
         {
             _itemCategoryService = itemCategory; 
+            _factory = factory;
         }
         [HttpGet]
         public ActionResult<List<ItemCategoriesModel>> Get()
         {
-            return ItemCategoriesModel.ToModel( _itemCategoryService.GetList());
+            return _factory.GetItemCategories();
         }
 
     }

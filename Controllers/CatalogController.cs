@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Core.Domain.Items;
+using Core.Services.Items;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using WebApplication3.Models.CatalogModels;
-using WebApplication3.Services;
+using WebApplication3.Models.Factories;
 
 namespace WebApplication3.Controllers
 {
@@ -14,14 +16,16 @@ namespace WebApplication3.Controllers
     public class CatalogController : BaseApiController
     {
         private readonly IItemService _itemService;
-        public CatalogController(IItemService itemService)
+        private readonly IItemModelFactory _factory;
+        public CatalogController(IItemService itemService, IItemModelFactory factory)
         {
             _itemService = itemService;
+            _factory = factory;
         }
         [HttpGet]
-        public ActionResult<List<ItemModel>> Get()
+        public ActionResult<List<ItemModel>> Get() 
         {
-            return _itemService.GetItems().ToList();
+            return _factory.GetListModel(_itemService.GetAll());
         }
     }
 }

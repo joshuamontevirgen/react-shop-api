@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Domain.Users;
+using Core.Services.Users;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication3.Models;
 using WebApplication3.Models.UserModels;
-using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -18,7 +19,25 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public ActionResult<ReturnValue> Post([FromBody] RegisterUserModel model)
         {
-            return _userService.Add(model);
+            var exist = _userService.GetByEmail(model.Email);
+            if (exist != null)
+            {
+                return new ReturnValue
+                {
+                    Success = false,
+                    Message = "Email is already taken"
+                };
+            }
+            var user = _userService.Add(new User
+            {
+                Email = model.Email,
+                Password = model.Password,
+            });
+            return new ReturnValue
+            {
+                Success = true,
+                Message = "Registration success"
+            };
         }
 
     }

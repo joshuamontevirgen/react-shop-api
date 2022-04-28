@@ -86,8 +86,9 @@ namespace WebApplication3
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
             app.UseCors("CorsPolicy");
+            app.UseRouting();
+    
             app.UseMiddleware<JwtMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();

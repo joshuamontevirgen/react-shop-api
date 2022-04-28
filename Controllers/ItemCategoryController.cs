@@ -14,7 +14,6 @@ namespace WebApplication3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors]
     public class ItemCategoryController : ControllerBase
     {
         private readonly IItemCategoryService _itemCategoryService;

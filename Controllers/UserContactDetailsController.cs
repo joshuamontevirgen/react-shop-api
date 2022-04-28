@@ -9,7 +9,6 @@ using WebApplication3.Models.UserModels;
 namespace WebApplication3.Controllers
 {
     [ApiController]
-    [EnableCors]
     [Authorize]
     [Route("api/user/contactdetails")]
     public class UserContactDetailsController : BaseApiController

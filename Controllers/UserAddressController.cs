@@ -11,7 +11,6 @@ using System.Linq;
 namespace WebApplication3.Controllers
 {
     [ApiController]
-    [EnableCors]
     [Authorize]
     [Route("api/user/address")]
     public class UserAddressController : BaseApiController

@@ -10,7 +10,6 @@ using WebApplication3.Models.Factories;
 
 namespace WebApplication3.Controllers
 {
-    [EnableCors("CorsPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class CatalogController : BaseApiController

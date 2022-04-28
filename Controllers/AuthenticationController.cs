@@ -14,7 +14,6 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
-    [EnableCors("CorsPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthenticationController : BaseApiController

@@ -13,7 +13,6 @@ using WebApplication3.Models.UserModels;
 
 namespace WebApplication3.Controllers
 {
-    [EnableCors("CorsPolicy")]
     [Route("api/user/[controller]")]
     [ApiController]
     [Authorize]

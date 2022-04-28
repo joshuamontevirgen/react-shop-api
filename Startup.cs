@@ -32,7 +32,7 @@ namespace WebApplication3
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
 
-                builder.AllowAnyOrigin()//WithOrigins("https://thankful-stone-0a2b60b00.1.azurestaticapps.net", "https://reactshop.itdcsystems.com")
+                builder.AllowAnyOrigin()//.WithOrigins("https://thankful-stone-0a2b60b00.1.azurestaticapps.net", "https://reactshop.itdcsystems.com")
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
@@ -83,10 +83,11 @@ namespace WebApplication3
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+         
             app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
+            app.UseHttpsRedirection();
             app.UseRouting();
     
             app.UseMiddleware<JwtMiddleware>();

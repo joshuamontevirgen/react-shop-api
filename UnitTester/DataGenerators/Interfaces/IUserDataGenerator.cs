@@ -10,5 +10,6 @@ namespace UnitTester.DataGenerators.Interfaces
     public interface IUserDataGenerator 
     {
         User AddUser();
+        UserAddress AddAddress(User user);
     }
 }

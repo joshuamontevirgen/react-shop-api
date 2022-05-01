@@ -87,6 +87,11 @@ namespace Core.Repositories
             return entityToUpdate;
         }
 
-
+        public List<TEntity> Insert(List<TEntity> entity)
+        {
+            dbSet.AddRange(entity);
+            context.SaveChanges();
+            return entity;
+        }
     }
 }

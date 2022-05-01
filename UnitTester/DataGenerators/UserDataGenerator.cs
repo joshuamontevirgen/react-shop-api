@@ -12,9 +12,11 @@ namespace UnitTester.Users
     public class UserDataGenerator : IUserDataGenerator
     {
         IUserService _userService;
-        public UserDataGenerator(IUserService userService)
+        IUserAddressService _userAddressService;
+        public UserDataGenerator(IUserService userService, IUserAddressService userAddressService)
         {
             _userService = userService;
+            _userAddressService = userAddressService;
         }
         public User AddUser()
         {
@@ -23,6 +25,17 @@ namespace UnitTester.Users
                 Email = $"{Guid.NewGuid().ToString()}@abc.com",
                 Password = "pass",
             });
+        }
+        public UserAddress AddAddress(User user)
+        {
+            var address = new UserAddress
+            {
+                UserId = user.Id,
+                Address = $"{Guid.NewGuid()}",
+                City = $"{Guid.NewGuid()}",
+                ZipCode = $"{Guid.NewGuid()}"
+            };
+            return _userAddressService.Add(address);
         }
     }
 }

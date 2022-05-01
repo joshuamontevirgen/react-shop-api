@@ -8,5 +8,6 @@ namespace Core.Domain.Orders
         public DateTime Date { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
+        public int UserAddressId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Orders;
+using Core.Domain.Items;
 using Core.Repositories;
 using Core.Services.Orders.Interfaces;
 using System;
@@ -12,13 +13,27 @@ namespace Core.Services.OrderItems
     public class OrderItemService : IOrderItemService
     {
         IRepository<OrderItem> _repository;
-        public OrderItemService(IRepository<OrderItem> OrderItemRepository)
+        IRepository<Item> _itemsRepository;
+        public OrderItemService(IRepository<OrderItem> OrderItemRepository, IRepository<Item> itemsRepository)
         {
             _repository = OrderItemRepository;
+            _itemsRepository = itemsRepository;
         }
-        public OrderItem Add(OrderItem model)
+        public OrderItem Add(Order order, OrderItem item)
         {
-            return _repository.Insert(model);
+            item.OrderId = order.Id;
+            item.Price = _itemsRepository.GetByID(item.ItemId).Price;
+            return _repository.Insert(item);
+        }
+
+        public List<OrderItem> Add(Order order, List<OrderItem> items)
+        {
+            items.ForEach(item => 
+            {
+                item.OrderId = order.Id;
+                item.Price = _itemsRepository.GetByID(item.ItemId).Price;
+            });
+            return _repository.Insert(items);
         }
 
         public IEnumerable<OrderItem> GetAll()

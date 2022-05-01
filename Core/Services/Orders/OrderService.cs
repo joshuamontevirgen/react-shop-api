@@ -26,6 +26,7 @@ namespace Core.Services.Orders
             return _repository.GetAll();
         }
 
+
         public Order GetById(int id)
         {
             return _repository.GetByID(id);

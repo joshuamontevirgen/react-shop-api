@@ -11,6 +11,7 @@ namespace UnitTester.DataGenerators.Interfaces
     public interface IOrderDataGenerator
     {
         Order AddOrder(int userId);
-        OrderItem AddOrderItem(int orderId, Item item, int quantity = 1);
+
+        OrderItem AddOrderItem(Order order, Item item, int quantity = 1);
     }
 }

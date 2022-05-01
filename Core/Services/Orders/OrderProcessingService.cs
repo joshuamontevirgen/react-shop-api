@@ -1,4 +1,5 @@
-﻿using Core.Services.Orders.Interfaces;
+﻿using Core.Domain.Orders;
+using Core.Services.Orders.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,13 @@ namespace Core.Services.Orders
         {
             _orderService = orderService;
             _orderItemService = orderItemService;
+        }
+
+        public Order PlaceOrder(Order order, List<OrderItem> items)
+        {
+            _orderService.Add(order);
+            _orderItemService.Add(order, items);
+            return order;
         }
     }
 }

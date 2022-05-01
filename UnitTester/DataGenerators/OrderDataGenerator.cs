@@ -33,16 +33,14 @@ namespace UnitTester.DataGenerators
             return _orderService.Add(order);
         }
 
-        public OrderItem AddOrderItem(int orderId, Item item, int quantity = 1)
+        public OrderItem AddOrderItem(Order order, Item item, int quantity = 1)
         {
-            var order = new OrderItem
+            var orderItem = new OrderItem
             {
                 ItemId = item.Id,
-                OrderId = orderId,
-                Price = item.Price,
                 Quantity = quantity,
             };
-            return _orderItemService.Add(order);
+            return _orderItemService.Add(order, orderItem);
         }
     }
 }

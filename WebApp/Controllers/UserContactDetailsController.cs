@@ -9,7 +9,7 @@ using WebApplication3.Models.UserModels;
 namespace WebApplication3.Controllers
 {
     [ApiController]
-    [Authorize]
+
     [Route("api/user/contactdetails")]
     public class UserContactDetailsController : BaseApiController
     {
@@ -22,7 +22,7 @@ namespace WebApplication3.Controllers
         [HttpGet]
         public ActionResult<UserContactDetails> Get()
         {
-            return _contactDetailsService.GetByUserId(GetUserId());
+            return _contactDetailsService.GetByUserId(GetUserId()) ?? new UserContactDetails();
         }
 
         [HttpPost]

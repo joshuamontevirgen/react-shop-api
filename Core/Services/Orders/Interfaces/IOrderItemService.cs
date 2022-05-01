@@ -10,7 +10,8 @@ namespace Core.Services.Orders.Interfaces
     public interface IOrderItemService
     {
         OrderItem GetById(int id);
-        OrderItem Add(OrderItem model);
+        OrderItem Add(Order order, OrderItem item);
+        List<OrderItem> Add(Order order, List<OrderItem> items);
         OrderItem Update(OrderItem model);
         IEnumerable<OrderItem> GetAll();
         IEnumerable<OrderItem> GetOrderItems(int orderId);

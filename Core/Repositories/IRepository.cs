@@ -17,6 +17,7 @@ namespace Core.Repositories
            string includeProperties = "");
 
         TEntity Insert(TEntity entity);
+        List<TEntity> Insert(List<TEntity> entity);
 
         void Delete(object id);
         void Delete(TEntity entityToDelete);

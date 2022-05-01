@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Domain.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace Core.Services.Orders.Interfaces
 {
     public interface IOrderProcessingService
     {
+        Order PlaceOrder(Order order, List<OrderItem> items);
     }
 }

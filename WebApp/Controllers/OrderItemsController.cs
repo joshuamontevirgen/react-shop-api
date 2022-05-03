@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebApplication3.Models;
 using System.Linq;
+using WebApplication3.Models.Factories;
+using WebApplication3.Models.OrderModels;
 
 namespace WebApplication3.Controllers
 {
@@ -16,15 +18,17 @@ namespace WebApplication3.Controllers
     public class OrderItemsController : ControllerBase
     {
         IOrderItemService _orderItemService;
-        public OrderItemsController(IOrderItemService orderItemService)
+        IOrderItemModelFactory _orderItemModelFactory;
+        public OrderItemsController(IOrderItemService orderItemService, IOrderItemModelFactory orderItemModelFactory)
         {
             _orderItemService = orderItemService;
+            _orderItemModelFactory = orderItemModelFactory;
         }
 
         [HttpGet("{orderId}")]
-        public ActionResult<List<OrderItem>> Get(int orderId)
+        public ActionResult<List<OrderItemModel>> Get(int orderId)
         {
-            return _orderItemService.GetOrderItems(orderId).ToList();
+            return _orderItemService.GetOrderItems(orderId).Select(s => _orderItemModelFactory.ToModel(s)).ToList();
         } 
     }
 }

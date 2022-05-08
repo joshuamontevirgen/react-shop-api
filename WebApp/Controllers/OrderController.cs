@@ -9,6 +9,7 @@ using WebApplication3.Models;
 using System.Linq;
 using WebApplication3.Models.Factories;
 using WebApplication3.Models.OrderModels;
+using System.Threading.Tasks;
 
 namespace WebApplication3.Controllers
 {
@@ -42,16 +43,16 @@ namespace WebApplication3.Controllers
 
 
         [HttpPost]
-        public ActionResult<ReturnValue<OrderModel>> Post([FromBody] CheckoutModel model)
+        public async Task<ActionResult<ReturnValue<PlacedOrderModel>>> Post([FromBody] CheckoutModel model)
         {
             model.Order.UserId = GetUserId();
             model.Order.Date = System.DateTime.Now;
-            var order = _orderProcessingService.PlaceOrder(model.Order, model.OrderItems);
-            return new ReturnValue<OrderModel>
+            var placeOrderResult = await _orderProcessingService.PlaceOrderAsync(model.Order, model.OrderItems);
+            return new ReturnValue<PlacedOrderModel>
             {
                 Success = true,
                 Message = "Order placed",
-                Data = _orderModelFactory.ToModel(order)
+                Data = _orderModelFactory.ToModel(placeOrderResult)
             };
         }
     }

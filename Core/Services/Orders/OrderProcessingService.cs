@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Orders;
 using Core.Services.Orders.Interfaces;
+using Core.Services.Payments.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,32 @@ namespace Core.Services.Orders
     {
         IOrderService _orderService;
         IOrderItemService _orderItemService;
-        public OrderProcessingService(IOrderService orderService, IOrderItemService orderItemService)
+        IPaymentService _paymentService;
+        public OrderProcessingService(IOrderService orderService, IOrderItemService orderItemService, IPaymentService paymentService)
         {
             _orderService = orderService;
             _orderItemService = orderItemService;
-        }
+            _paymentService = paymentService;
+         }
 
-        public Order PlaceOrder(Order order, List<OrderItem> items)
+        public async Task<PlaceOrderResult> PlaceOrderAsync(Order order, List<OrderItem> items)
         {
             _orderService.Add(order);
             _orderItemService.Add(order, items);
-            return order;
+            var processPaymentResult = await _paymentService.ProcessPaymentAsync(new Core.Payments.ProcessPaymentRequest
+            {
+                OrderId = order.Id,
+                UserId = order.UserId,
+                PaymentMethod = order.PaymentMethod
+            });
+            return new PlaceOrderResult
+            {
+                Order = order,
+                PaymentProcess = processPaymentResult
+            };
         }
+
+
     }
 }
+

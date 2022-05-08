@@ -9,5 +9,6 @@ namespace Core.Domain.Orders
         public OrderStatus OrderStatus { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public int UserAddressId { get; set; }
+        public string PaymentMethod { get; set; }
     }
 }

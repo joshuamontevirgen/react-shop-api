@@ -2,13 +2,14 @@
 using Core.Services.Payments.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Paymaya.Models.Checkout;
-using Paymaya.Models.Webhooks;
+using Core.Payments.PaymentMethods.Paymaya.Models.Checkout;
+using Core.Payments.PaymentMethods.Paymaya.Models.Webhooks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Paymaya.Services
 {

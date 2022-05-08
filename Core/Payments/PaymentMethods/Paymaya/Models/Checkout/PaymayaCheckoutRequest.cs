@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paymaya.Models.Checkout
+namespace Core.Payments.PaymentMethods.Paymaya.Models.Checkout
 {
     //https://hackmd.io/@paymaya-pg/Checkout
-    public class CheckoutRequest
+    public class PaymayaCheckoutRequest
     {
         #region Properties
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paymaya.Models.Checkout
+namespace Core.Payments.PaymentMethods.Paymaya.Models.Checkout
 {
     public class CheckoutWebhookModel : PaymayaCheckoutRequest
     {

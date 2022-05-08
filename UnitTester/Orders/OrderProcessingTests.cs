@@ -61,7 +61,7 @@ namespace UnitTester.Orders
             };
 
 
-            _orderProcessingService.PlaceOrder(order, new List<OrderItem> { orderItem1, orderItem2 });
+            _orderProcessingService.PlaceOrderAsync(order, new List<OrderItem> { orderItem1, orderItem2 });
             var orderItemGet = _orderItemService.GetOrderItems(order.Id);
             var orderGet = _orderService.GetById(order.Id);
 

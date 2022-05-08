@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Paymaya.Models.Checkout
 {
-    public class CheckoutResponse
+    public class PaymayaCheckoutResponse
     {
         [JsonProperty(PropertyName = "checkoutId")]
         public string CheckoutId { get; set; }

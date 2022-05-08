@@ -4,6 +4,8 @@ using WebApplication3.Helpers;
 using WebApplication3.Models.OrderModels;
 using System.Linq;
 using Core.Services.Users;
+using Core.Payments;
+using Core.Services.Orders;
 
 namespace WebApplication3.Models.Factories
 {
@@ -23,6 +25,15 @@ namespace WebApplication3.Models.Factories
             var model = new OrderModel();
             order.ShallowConvert(model);
             model.Address = _userAddressService.GetById(order.UserAddressId);
+            return model;
+        }
+        public PlacedOrderModel ToModel(PlaceOrderResult orderResult)
+        {
+            var model = new PlacedOrderModel();
+            var order = orderResult.Order;
+            order.ShallowConvert(model);
+            model.Address = _userAddressService.GetById(order.UserAddressId);
+            model.PaymentProcess = orderResult.PaymentProcess;
             return model;
         }
     }

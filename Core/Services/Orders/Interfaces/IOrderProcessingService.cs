@@ -9,6 +9,6 @@ namespace Core.Services.Orders.Interfaces
 {
     public interface IOrderProcessingService
     {
-        Order PlaceOrder(Order order, List<OrderItem> items);
+        Task<PlaceOrderResult> PlaceOrderAsync(Order order, List<OrderItem> items);
     }
 }

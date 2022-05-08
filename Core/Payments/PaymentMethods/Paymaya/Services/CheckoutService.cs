@@ -1,6 +1,6 @@
 ﻿using Core.Domain.Orders;
-using Paymaya.Client;
-using Paymaya.Models.Checkout;
+using Core.Payments.PaymentMethods.Paymaya.Client;
+using Core.Payments.PaymentMethods.Paymaya.Models.Checkout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +12,12 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using Core.Services.Orders.Interfaces;
 using Core.Services.Users;
+using System.Net.Http;
 
-namespace Paymaya.Services
+namespace Core.Payments.PaymentMethods.Paymaya.Services
 {
     public class CheckoutService : ICheckoutService
     {
-        Settings _settings;
         IItemService _itemService;
         IOrderService _orderService;
         IOrderItemService _orderItemService;
@@ -25,7 +25,6 @@ namespace Paymaya.Services
         IUserContactDetailsService _userContactDetailsService;
         IUserAddressService _userAddressService;
         public CheckoutService(
-            Settings settings, 
             IItemService itemService,
             IOrderService orderService,
             IOrderItemService orderItemService,
@@ -33,7 +32,6 @@ namespace Paymaya.Services
             IUserContactDetailsService contactDetailsService,
             IUserAddressService userAddressService)
         {
-            _settings = settings;
             _itemService = itemService;
             _orderService = orderService;
             _orderItemService = orderItemService;
@@ -137,7 +135,8 @@ namespace Paymaya.Services
             var requestContent = JsonConvert.SerializeObject(checkoutRequest);
            
 
-            using(var client = new PublicClient(_settings))
+           // using(var client = new PublicClient(_settings))
+            using (var client = new PublicClient(new Settings()))
             {
                 var address = "checkout/v1/checkouts";
                 var request = new HttpRequestMessage()

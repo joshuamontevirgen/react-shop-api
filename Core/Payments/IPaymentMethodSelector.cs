@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Domain.Orders
+namespace Core.Payments
 {
-    public enum PaymentStatus
+    public interface IPaymentMethodSelector
     {
-        Pending, 
-        Paid,
-        Failed
+        IPaymentMethod SelectPaymentMethod(string name);
     }
 }

@@ -68,5 +68,40 @@ namespace UnitTester.Orders
             orderGet.Should().BeEquivalentTo(order);
             Assert.IsTrue(orderItemGet.Count() == 2);
         }
+
+        [Test]
+        public void TestTotal()
+        {
+            var item1 = itemDataGenerator.AddItem();
+            var item2 = itemDataGenerator.AddItem();
+            var user = userDataGenerator.AddUser();
+            var address = userDataGenerator.AddAddress(user);
+            var order = new Order
+            {
+                Date = DateTime.Now,
+                OrderStatus = OrderStatus.Processing,
+                PaymentStatus = PaymentStatus.Pending,
+                UserId = user.Id,
+                UserAddressId = address.Id,
+            };
+            var orderItem1 = new OrderItem
+            {
+                ItemId = item1.Id,
+                Price = item1.Price,
+                Quantity = 1
+            };
+            var orderItem2 = new OrderItem
+            {
+                ItemId = item2.Id,
+                Price = item2.Price,
+                Quantity = 1
+            };
+
+            var total = orderItem1.Price * orderItem1.Quantity;
+            total += orderItem2.Price * orderItem1.Quantity;
+            _orderProcessingService.PlaceOrderAsync(order, new List<OrderItem> { orderItem1, orderItem2 });
+            var orderGet = _orderService.GetById(order.Id);
+            Assert.IsTrue(orderGet.Total == total);
+        }
     }
 }

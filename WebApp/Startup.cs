@@ -1,4 +1,6 @@
 using Core.Infrastructure;
+using Core.Payments.Infrastructure;
+using Core.Payments.PaymentMethods.COD.Infrastructure;
 using Core.Payments.PaymentMethods.Paymaya.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -67,7 +69,7 @@ namespace WebApplication3
                         .AddClasses()
                         .AsMatchingInterface()
                         .WithTransientLifetime());
-            services.AddPaymaya();
+            services.AddPaymentMethods();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

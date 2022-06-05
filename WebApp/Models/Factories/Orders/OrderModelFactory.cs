@@ -6,15 +6,20 @@ using System.Linq;
 using Core.Services.Users;
 using Core.Payments;
 using Core.Services.Orders;
+using Core.Services.Orders.Interfaces;
 
 namespace WebApplication3.Models.Factories
 {
     public class OrderModelFactory : IOrderModelFactory
     {
         IUserAddressService _userAddressService;
-        public OrderModelFactory(IUserAddressService userAddressService)
+        IOrderItemService _orderItemService;
+        IOrderItemModelFactory _orderItemModelFactory;
+        public OrderModelFactory(IUserAddressService userAddressService, IOrderItemService orderItemService, IOrderItemModelFactory orderItemModelFactory)
         {
             _userAddressService = userAddressService;
+            _orderItemService = orderItemService;
+            _orderItemModelFactory = orderItemModelFactory;
         }
         public List<OrderModel> ToModel(List<Order> orders)
         {            
@@ -25,6 +30,8 @@ namespace WebApplication3.Models.Factories
             var model = new OrderModel();
             order.ShallowConvert(model);
             model.Address = _userAddressService.GetById(order.UserAddressId);
+            model.Items = _orderItemService.GetOrderItems(order.Id).Select(s => _orderItemModelFactory.ToModel(s)).ToList();
+
             return model;
         }
         public PlacedOrderModel ToModel(PlaceOrderResult orderResult)

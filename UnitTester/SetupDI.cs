@@ -1,4 +1,5 @@
 ﻿using Core.Infrastructure;
+using Core.Payments.Infrastructure;
 using Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,6 +20,7 @@ namespace UnitTester
             services = new ServiceCollection();
             services.AddShopCore();
             services.AddDataGenerators();
+            services.AddPaymentMethods();
             serviceProvider = services.BuildServiceProvider();
         }
         public T GetService<T>()

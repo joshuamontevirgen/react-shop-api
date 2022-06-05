@@ -10,5 +10,6 @@ namespace Core.Domain.Orders
         public PaymentStatus PaymentStatus { get; set; }
         public int UserAddressId { get; set; }
         public string PaymentMethod { get; set; }
+        public decimal Total { get; set; }  
     }
 }

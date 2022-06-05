@@ -1,30 +1,28 @@
-﻿using Core.Payments;
-using Core.Payments.PaymentMethods.Paymaya.Services;
+﻿using Core.Payments.PaymentMethods.Paymaya.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Payments.PaymentMethods.Paymaya
+namespace Core.Payments.PaymentMethods.COD
 {
-    public class PaymayaPaymentProcessor : IPaymayaPaymentMethod
+    public class CODPaymentProcessor : ICODPaymentMethod
     {
         ICheckoutService _checkoutService;
-        public PaymayaPaymentProcessor(ICheckoutService checkoutService)
+        public CODPaymentProcessor(ICheckoutService checkoutService)
         {
             _checkoutService = checkoutService;
         }
 
-        public string Name => "Paymaya";
+        public string Name => "COD";
 
         public async Task<ProcessPaymentResult> ProcessPaymentAsync(ProcessPaymentRequest processPaymentRequest)
         {
             var response = await _checkoutService.CreateOrderAsync(processPaymentRequest.OrderId);
             var result = new ProcessPaymentResult
             {
-                RedirectUrl = response.RedirectUrl,
-                ThirdPartyPaymentId = response.CheckoutId
+               
             };
             return result;
         }

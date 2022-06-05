@@ -22,7 +22,7 @@ namespace Core.Services.Payments
 
         public async Task<ProcessPaymentResult> ProcessPaymentAsync(ProcessPaymentRequest processPaymentRequest)
         {
-            var paymentMethod = _paymentMethodSelector.SelectPaymentMethod("");
+            var paymentMethod = _paymentMethodSelector.SelectPaymentMethod(processPaymentRequest.PaymentMethod);
             return await paymentMethod.ProcessPaymentAsync(processPaymentRequest);
         }
 

@@ -8,8 +8,9 @@ namespace Core.Payments.PaymentMethods.Paymaya
 {
     public class Settings
     {
-        public string SecretKey => "";
-        public string ClientId => "";
+        //https://hackmd.io/@paymaya-pg/Checkout#Sandbox-Test-Credentials
+        public string SecretKey => "sk-VGDKY3P90NYZZ0kSWqBFaD1NTIXQCxtdS7SbQXvcA4g";
+        public string ClientId => "pk-yaj6GVzYkce52R193RIWpuRR5tTZKqzBWsUeCkP9EAf";
         public string BaseUrl => "https://pg-sandbox.paymaya.com/";
         public bool UseSandbox => true;
 
